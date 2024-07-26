@@ -1,0 +1,29 @@
+name: Run Telegram Bot
+
+on:
+  push:
+    branches:
+      - main  # Chạy khi có thay đổi trên nhánh main
+  schedule:
+    - cron: '*/30 * * * *'  # Chạy mỗi 30 phút để kiểm tra và khởi động bot nếu cần
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.x'  # Chọn phiên bản Python bạn cần
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Run bot
+      run: |
+        python main.py
